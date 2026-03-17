@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: portale-pippo
+spec:
+  replicas: 2        # <--- ECCO IL COMANDO PER LE 2 REPLICHE!
+  selector:
+    matchLabels:
+      app: portale-pippo
+  template:
+    metadata:
+      labels:
+        app: portale-pippo
+    spec:
+      containers:
+      - name: portale-pippo-web
+        image: nginx:alpine # Usiamo una versione leggera di Linux/Webserver
+        ports:
+        - containerPort: 80
+        envFrom:
+        - configMapRef:
+            name: info-portale-pippo # Qui colleghiamo la tua ConfigMap!
